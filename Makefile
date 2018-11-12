@@ -1,17 +1,14 @@
-
-BCM_H_DIR?=/opt/vc/include/interface/
+BCM_H_DIR?=/opt/vc/include/
 
 CXX=g++
-CXX_OPTS=-I$(BCM_H_DIR)vcos/ \
-	-I$(BCM_H_DIR)vcos/pthreads/ \
-	-I$(BCM_H_DIR)vmcs_host/linux
+CXX_OPTS=-I$(BCM_H_DIR)
 
 CXXFLAGS=$(CXX_OPTS)
 
 CC=cc
 CFLAGS=
-CC_OPTS=-lmmal -lmmal_core -lmmal_util -lbcm_host 
-LDFLAGS=$(CC_OPTS)
+CC_OPTS=-lmmal -lmmal_core -lmmal_util -lbcm_host
+LDFLAGS=-L/opt/vc/lib $(CC_OPTS)
 
 INSTALL=install
 
@@ -26,7 +23,7 @@ raspimjpeg: $(OBJ_RASPIMJPEG)
 	$(CC) $(CFLAGS) $(OBJ_RASPIMJPEG) -o raspimjpeg $(LDFLAGS) $(CC_OPTS)
 
 install:
-	$(INSTALL) -m 0755 -d $(DESTDIR)/usr/local/bin
+	$(INSTALL) -m 755 -d $(DESTDIR)/usr/local/bin
 	$(INSTALL) -m 755 raspimjpeg $(DESTDIR)/usr/local/bin/
 	$(INSTALL) -m 664 raspimjpeg.config $(DESTDIR)/etc/
 
